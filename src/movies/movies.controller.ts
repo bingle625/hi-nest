@@ -1,4 +1,7 @@
 import { MoviesService } from './movies.service';
+import { CreateMovieDTO } from './dto/create-movie.dto';
+import { Movie } from './entities/movies.entities';
+import { UpdateMovieDTO } from './dto/update-movie.dto';
 import {
   Body,
   Controller,
@@ -25,21 +28,24 @@ export class MoviesController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') id: string) {
+  getOne(@Param('id') id: number): Movie {
     return this.moviesService.getOne(id);
   }
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMovieDTO) {
     return this.moviesService.create(movieData);
   }
 
   @Delete('/:id')
-  deleteMovie(@Param('id') id: string) {
+  deleteMovie(@Param('id') id: number) {
     return this.moviesService.deleteOne(id);
   }
 
   @Patch('/:id')
-  updateMovie(@Param('id') movieId: string, @Body() updateData) {
+  updateMovie(
+    @Param('id') movieId: number,
+    @Body() updateData: UpdateMovieDTO,
+  ) {
     return this.moviesService.update(movieId, updateData);
   }
 }
